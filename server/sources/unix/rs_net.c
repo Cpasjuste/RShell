@@ -10,11 +10,14 @@
 #include <stdbool.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
-#include <zconf.h>
 
 #include "rs_internal.h"
 
 int rs_net_init() {
+    return 0;
+}
+
+int rs_net_exit() {
     return 0;
 }
 
@@ -45,7 +48,7 @@ int rs_net_bind(int sock, int port) {
 }
 
 int rs_net_close(int sock) {
-    return close(sock);
+    return shutdown(sock, 2);
 }
 
 int rs_net_get_sock(int sock) {

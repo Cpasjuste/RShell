@@ -23,9 +23,9 @@
 #include <stdbool.h>
 #include <sys/socket.h>
 
-#include "rs_msg.h"
+#include "rs_internal.h"
 
-int rs_msg_receive(int sock, RS_MSG *msg) {
+int rs_msg_receive(int sock, rs_msg_t *msg) {
 
     char buffer[RS_SIZE_MSG];
     memset(buffer, 0, RS_SIZE_MSG);
@@ -56,7 +56,7 @@ void rs_msg_send(int sock, int color, const char *msg) {
     send(sock, buffer, len, 0);
 }
 
-int rs_msg_send_msg(int sock, RS_MSG *msg) {
+int rs_msg_send_msg(int sock, rs_msg_t *msg) {
 
     char buffer[RS_SIZE_MSG];
 
@@ -68,7 +68,7 @@ int rs_msg_send_msg(int sock, RS_MSG *msg) {
     return -1;
 }
 
-int rs_msg_to_string(char *buffer, RS_MSG *cmd) {
+int rs_msg_to_string(char *buffer, rs_msg_t *cmd) {
 
     if (!buffer || !cmd) {
         return -1;
@@ -81,7 +81,7 @@ int rs_msg_to_string(char *buffer, RS_MSG *cmd) {
     return 0;
 }
 
-int rs_msg_to_msg_advanced(RS_MSG *msg, const char *buffer, size_t len) {
+int rs_msg_to_msg_advanced(rs_msg_t *msg, const char *buffer, size_t len) {
 
     if (!msg || !buffer) {
         return -1;
@@ -91,7 +91,7 @@ int rs_msg_to_msg_advanced(RS_MSG *msg, const char *buffer, size_t len) {
         return -1;
     }
 
-    memset(msg, 0, sizeof(RS_MSG));
+    memset(msg, 0, sizeof(rs_msg_t));
 
     // type
     char tmp[2];
@@ -109,7 +109,7 @@ int rs_msg_to_msg_advanced(RS_MSG *msg, const char *buffer, size_t len) {
     return 0;
 }
 
-int rs_msg_to_msg(RS_MSG *msg, const char *buffer) {
+int rs_msg_to_msg(rs_msg_t *msg, const char *buffer) {
 
     return rs_msg_to_msg_advanced(msg, buffer, strlen(buffer) - 2);
 }

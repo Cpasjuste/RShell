@@ -29,32 +29,24 @@ extern "C" {
 #define RS_ERR_SOCKET      0x80000001
 #define RS_ERR_INVALID_MSG 0x80000002
 
-typedef struct RS_MSG {
+typedef struct {
     int color;
     char buffer[RS_KMSG_SIZE];
-} RS_MSG;
+} rs_msg_t;
 
 #define RS_SIZE_MSG        (450)
 
-enum rs_colors_t {
-    COL_NONE = 10,
-    COL_RED,
-    COL_YELLOW,
-    COL_GREEN,
-    COL_HEX
-};
-
-int rs_msg_receive(int sock, RS_MSG *msg);
+int rs_msg_receive(int sock, rs_msg_t *msg);
 
 void rs_msg_send(int sock, int color, const char *msg);
 
-int rs_msg_send_msg(int sock, RS_MSG *msg);
+int rs_msg_send_msg(int sock, rs_msg_t *msg);
 
-int rs_msg_to_string(char *buffer, RS_MSG *cmd);
+int rs_msg_to_string(char *buffer, rs_msg_t *cmd);
 
-int rs_msg_to_msg(RS_MSG *msg, const char *buffer);
+int rs_msg_to_msg(rs_msg_t *msg, const char *buffer);
 
-int rs_msg_to_msg_advanced(RS_MSG *msg, const char *buffer, size_t len);
+int rs_msg_to_msg_advanced(rs_msg_t *msg, const char *buffer, size_t len);
 
 #ifdef __cplusplus
 }

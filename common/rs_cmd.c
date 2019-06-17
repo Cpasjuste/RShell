@@ -25,7 +25,7 @@
 
 #include "rs_cmd.h"
 
-int rs_cmd_receive(int sock, RS_CMD *cmd) {
+int rs_cmd_receive(int sock, rs_cmd_t *cmd) {
 
     char buffer[RS_SIZE_CMD];
     memset(buffer, 0, RS_SIZE_CMD);
@@ -53,7 +53,7 @@ int rs_cmd_wait_result(int sock) {
         return -1;
     }
 
-    RS_CMD cmd;
+    rs_cmd_t cmd;
     if (rs_cmd_to_cmd(&cmd, buffer) != 0) {
         return -1;
     }
@@ -95,7 +95,7 @@ void rs_cmd_send(int sock, int cmdType) {
     send(sock, buffer, 4, 0);
 }
 
-void rs_cmd_send_cmd(int sock, RS_CMD *cmd) {
+void rs_cmd_send_cmd(int sock, rs_cmd_t *cmd) {
 
     char buffer[RS_SIZE_CMD];
     memset(buffer, 0, RS_SIZE_CMD);
@@ -141,7 +141,7 @@ void rs_cmd_send_long(int sock, int cmdType, long value) {
     send(sock, buffer, strlen(buffer), 0);
 }
 
-int rs_cmd_to_string(char *buffer, RS_CMD *c) {
+int rs_cmd_to_string(char *buffer, rs_cmd_t *c) {
 
     if (!buffer || !c) {
         return -1;
@@ -157,7 +157,7 @@ int rs_cmd_to_string(char *buffer, RS_CMD *c) {
     return 0;
 }
 
-int rs_cmd_to_cmd(RS_CMD *c, const char *buffer) {
+int rs_cmd_to_cmd(rs_cmd_t *c, const char *buffer) {
 
     if (!c || !buffer) {
         return -1;
@@ -167,7 +167,7 @@ int rs_cmd_to_cmd(RS_CMD *c, const char *buffer) {
         return -1;
     }
 
-    memset(c, 0, sizeof(RS_CMD));
+    memset(c, 0, sizeof(rs_cmd_t));
 
     // type
     char tmp[2];

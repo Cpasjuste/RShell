@@ -7,6 +7,8 @@
 
 int rs_net_init();
 
+int rs_net_exit();
+
 int rs_net_bind(int sock, int port);
 
 int rs_net_close(int sock);

@@ -32,10 +32,10 @@ extern "C" {
 #define RS_SIZE_STRING     (128)
 #define RS_MAX_ARGS        (3)
 
-typedef struct RS_CMD {
+typedef struct {
     int type;
     char args[RS_MAX_ARGS][RS_SIZE_STRING];
-} RS_CMD;
+} rs_cmd_t;
 
 #define RS_SIZE_CMD        (400)
 
@@ -89,7 +89,7 @@ enum rs_cmd_t {
     CMD_NOK = 65
 };
 
-int rs_cmd_receive(int sock, RS_CMD *cmd);
+int rs_cmd_receive(int sock, rs_cmd_t *cmd);
 
 size_t rs_cmd_receive_buffer(int sock, void *buffer, size_t size);
 
@@ -97,7 +97,7 @@ int rs_cmd_wait_result(int sock);
 
 void rs_cmd_send(int sock, int cmdType);
 
-void rs_cmd_send_cmd(int sock, RS_CMD *cmd);
+void rs_cmd_send_cmd(int sock, rs_cmd_t *cmd);
 
 void rs_cmd_send_fmt(int sock, const char *fmt, ...);
 
@@ -107,9 +107,9 @@ void rs_cmd_send_int(int sock, int cmdType, int value);
 
 void rs_cmd_send_long(int sock, int cmdType, long value);
 
-int rs_cmd_to_string(char *buffer, RS_CMD *c);
+int rs_cmd_to_string(char *buffer, rs_cmd_t *c);
 
-int rs_cmd_to_cmd(RS_CMD *c, const char *buffer);
+int rs_cmd_to_cmd(rs_cmd_t *c, const char *buffer);
 
 #ifdef __cplusplus
 }
